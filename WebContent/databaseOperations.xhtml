@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+	<title><ui:insert name="title">Default title</ui:insert></title>
+</h:head>
+
+
+
+<h:body>
+
+	<h:outputStylesheet library="css" name="style.css" />
+
+
+	<div id="header">
+		<ui:insert name="header">
+			<ui:include src="/WEB-INF/templates/header.xhtml" />
+		</ui:insert>
+	</div>
+	<br />
+
+	<h:form>
+		<h:panelGrid columns="7" cellpadding="1" cellspacing="1"
+			style="width: 300px">
+
+			<h:commandButton type="submit" value="Tables"
+				action="#{operationcontroller.getTables}" />
+			<h:commandButton type="submit" value="Columns"
+				action="#{operationcontroller.getColumns}" />
+			<h:commandButton type="submit" value="Display Table"
+				action="#{operationcontroller.getTableContents}" />
+			<h:commandButton type="submit" value="Display Columns"
+				action="#{operationcontroller.getColumnContents}" />
+			<h:commandButton type="submit" value="Execute Query"
+				action="#{operationcontroller.getQueryExecutionMethod}" />
+			<h:commandButton type="submit" value="Drop Table"
+				action="#{operationcontroller.getDropQuery}" />
+			<h:commandButton type="submit" value="Clear"
+				action="#{operationcontroller.clearContent}" />
+		</h:panelGrid>
+		<br />
+
+		<h:panelGrid columns="3" cellspacing="1">
+
+			<h:outputLabel> Table List </h:outputLabel>
+			<h:outputLabel> Column List </h:outputLabel>
+			<h:outputLabel> Please enter your query here. </h:outputLabel>
+
+			<h:panelGroup id="table_group">
+				<h:selectOneListbox value="#{operationBean.tableSelected}" size="8"
+					style="width:10em" id="meta1">
+					<f:selectItems value="#{operationBean.tableList}" var="tableName"></f:selectItems>
+					<f:ajax execute="@all" render="column_group"></f:ajax>
+				</h:selectOneListbox>
+			</h:panelGroup>
+
+			<h:panelGroup id="column_group">
+				<h:selectManyListbox value="#{operationBean.columnsSelected}"
+					size="8" style="width:10em" id="meta2">
+					<f:selectItems value="#{operationBean.columnList}" var="columnName"></f:selectItems>
+				</h:selectManyListbox>
+			</h:panelGroup>
+
+			<h:panelGroup id="query_section">
+				<h:inputTextarea value="#{operationBean.query}" cols="80" rows="9" />
+			</h:panelGroup>
+
+		</h:panelGrid>
+		<br />
+		<br />
+		<hr />
+
+		<h:panelGrid>
+			<h2>
+				<u>RESULT</u>
+			</h2>
+			<h:panelGroup layout="block" id="message">
+				<h:outputText value="#{operationBean.operationError}" />
+				<br> </br>
+				<b>Columns Affected :</b>
+				<h:outputText value="#{operationBean.columnCount}" />
+				<br> </br>
+				<b>Rows Affected :</b>
+				<h:outputText value="#{operationBean.rowCount}" />
+			</h:panelGroup>
+		</h:panelGrid>
+		<hr />
+
+		
+	
+<div class="super">
+<h:panelGrid>
+			<h:panelGroup layout="block" id="table_content">
+				<table style="width: 100%" border="3">
+					<tr>
+						<ui:repeat value="#{operationBean.columnHeader}" var="columnName">
+							<th>#{columnName}</th>
+						</ui:repeat>
+					</tr>
+
+					<ui:repeat value="#{operationBean.dataRows}" var="rows">
+						<tr>
+							<ui:repeat value="#{rows}" var="rowValue">
+								<td>#{rowValue}</td>
+							</ui:repeat>
+						</tr>
+					</ui:repeat>
+				</table>
+			</h:panelGroup>
+		</h:panelGrid>
+
+</div>
+
+	</h:form>
+
+	<div id="footer">
+		<ui:insert name="footer">
+			<ui:include src="/WEB-INF/templates/footer.xhtml" />
+		</ui:insert>
+	</div>
+
+</h:body>
+
+</html>

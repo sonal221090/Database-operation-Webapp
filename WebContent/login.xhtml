@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+	<title><ui:insert name="title">Team	s17g308</ui:insert></title>
+	<h:outputStylesheet library="css" name="style.css" />
+</h:head>
+
+
+<h:body>
+	
+
+	<div class="login-page">
+	
+		
+
+		<div class="form">
+
+				<h1> S17G308</h1>
+			<h:form id="loginForm">
+				<h:panelGrid columns="3">
+
+					<h:outputText value="Host*" />
+
+					<h:selectOneMenu value="#{loginbean.host}">
+						<f:selectItem itemValue="131.193.209.54"
+							itemLabel="131.193.209.54" />
+						<f:selectItem itemValue="131.193.209.57"
+							itemLabel="131.193.209.57" />
+						<f:selectItem itemValue="localhost" itemLabel="localhost" />
+					</h:selectOneMenu>
+					<br />
+
+					<h:outputText value="RDBMS*" />
+					<h:selectOneMenu value="#{loginbean.dbms}">
+						<f:selectItem itemValue="mysql" itemLabel="MySQL" />
+						<f:selectItem itemValue="oracle" itemLabel="ORACLE" />
+						<f:selectItem itemValue="db2" itemLabel="DB2" />
+					</h:selectOneMenu>
+					<br />
+
+					<h:outputText value="databaseSchema*" />
+					<h:inputText id="databaseSchema" required="true"
+						value="#{loginbean.schema}" requiredMessage="Schema is required" />
+					<h:message for="databaseSchema" style="color:red" />
+
+					<h:outputText value="UserName*" />
+					<h:inputText id="username" required="true"
+						value="#{loginbean.username}"
+						requiredMessage="Username is required" />
+					<h:message for="username" style="color:red" />
+
+					<h:outputText value="Password*" />
+					<h:inputSecret id="password" required="true"
+						value="#{loginbean.password}"
+						requiredMessage="Password is required" />
+					<h:message for="password" style="color:red" />
+
+
+					<h:commandButton type="reset" value="Clear" />
+
+					<h:commandButton type="submit" value="Login"
+						action="#{loginController.validate}" />
+
+
+				</h:panelGrid>
+
+				<h:outputText value="#{loginbean.loginError}" />
+			</h:form>
+
+		</div>
+
+
+	</div>
+
+</h:body>
+
+</html>

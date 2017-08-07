@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+	<title><ui:insert name="title">Default title</ui:insert></title>
+</h:head>
+
+
+
+<h:body>
+
+	<h:outputStylesheet library="css" name="style.css" />
+
+
+	<div id="header">
+		<ui:insert name="header">
+			<ui:include src="/WEB-INF/templates/header.xhtml" />
+		</ui:insert>
+	</div>
+	<br />
+
+	<h:form>
+		<h:panelGrid columns="7" cellpadding="1" cellspacing="1"
+			style="width: 300px">
+
+			<h:commandButton type="submit" value="Tables"
+				action="#{operationcontroller.getTables}">
+				<f:ajax execute="@all" render="tablist_label table_group meta1"></f:ajax>
+			</h:commandButton>
+			<h:commandButton type="submit" value="Columns"
+				action="#{operationcontroller.getColumns}">
+				<f:ajax execute="@all" render="colList_label column_group meta2"></f:ajax>
+			</h:commandButton>
+			<h:commandButton type="submit" value="Descriptive Statistics"
+				action="#{operationcontroller.generateDescriptiveStatistics}">
+				<f:ajax execute="@all" render="descTable statistics_message"></f:ajax>
+			</h:commandButton>
+
+
+			<h:commandButton type="submit" value="Regression Analaysis"
+				action="#{operationcontroller.getVariableList}">
+				<f:ajax execute="@all"
+					render="pv tv variable_group_p variable_group_t"></f:ajax> 
+			</h:commandButton>
+
+			<h:commandButton type="submit" value="Generate Regression Report"
+				action="#{operationcontroller.regressionAnalysis}">
+
+			</h:commandButton>
+
+
+
+
+			<h:commandButton type="submit" value="Clear"
+				action="#{operationcontroller.clearContent}" />
+
+
+		</h:panelGrid>
+		<br />
+
+
+		<h:panelGrid columns="4" cellspacing="2">
+
+			<h:panelGroup id="tablist_label">
+				<h:outputLabel rendered="#{operationBean.tabFlag}"> Table List </h:outputLabel>
+			</h:panelGroup>
+
+			<h:panelGroup id="colList_label">
+				<h:outputLabel rendered="#{operationBean.colFlag}"> Column List </h:outputLabel>
+			</h:panelGroup>
+
+			<h:panelGroup id="pv">
+				<h:outputLabel rendered="#{statisticsBean.regression}"> Predictor Variable </h:outputLabel>
+			</h:panelGroup>
+
+			<h:panelGroup id="tv">
+				<h:outputLabel rendered="#{statisticsBean.regression}">Target Variable </h:outputLabel>
+			</h:panelGroup>
+
+			<h:panelGroup id="table_group">
+				<h:selectOneListbox value="#{operationBean.tableSelected}" size="8"
+					style="width:10em" id="meta1">
+					<f:selectItems value="#{operationBean.tableList}" var="tableName"></f:selectItems>
+
+				</h:selectOneListbox>
+			</h:panelGroup>
+
+			<h:panelGroup id="column_group">
+				<h:selectManyListbox value="#{operationBean.columnsSelected}"
+					size="8" style="width:10em" id="meta2">
+					<f:selectItems value="#{operationBean.columnList}"
+						var="columnName1"></f:selectItems>
+				</h:selectManyListbox>
+			</h:panelGroup>
+
+			<h:panelGroup id="variable_group_p">
+				<h:selectOneListbox value="#{regressionBean.pvSelected}" size="8"
+					style="width:10em" rendered="#{statisticsBean.regression}">
+					<f:selectItems value="#{regressionBean.variableList}"
+						var="columnName2"></f:selectItems>
+				</h:selectOneListbox>
+			</h:panelGroup>
+
+			<h:panelGroup id="variable_group_t">
+				<h:selectOneListbox value="#{regressionBean.tvSelected}" size="8"
+					style="width:10em" rendered="#{statisticsBean.regression}">
+					<f:selectItems value="#{regressionBean.variableList}"
+						var="columnName3"></f:selectItems>
+				</h:selectOneListbox>
+			</h:panelGroup>
+
+		</h:panelGrid>
+		<br />
+		<br />
+		<hr />
+
+		<h:panelGroup layout="block" id="statistics_message">
+			<b><h:outputText value="#{statisticsBean.error}"
+					style="color:red;" /></b>
+		</h:panelGroup>
+
+		<h:panelGrid>
+
+			<h:panelGroup layout="block" id="regression_message">
+				<b><h:outputText value="#{regressionBean.regressError}"
+						style="color:red;" /></b>
+			</h:panelGroup>
+		</h:panelGrid>
+		<br />
+
+
+		<h:panelGrid id="descTable">
+			<h:panelGroup layout="block" id="table_content_1"
+				rendered="#{statisticsBean.renderTable}">
+				<table style="width: 100%" border="3">
+					<tr>
+						<ui:repeat value="#{statisticsBean.columnNames}" var="columnName">
+							<th>#{columnName}</th>
+						</ui:repeat>
+					</tr>
+
+					<ui:repeat value="#{statisticsBean.dataRows}" var="rows">
+						<tr>
+							<ui:repeat value="#{rows}" var="rowValue">
+								<td>#{rowValue}</td>
+							</ui:repeat>
+						</tr>
+					</ui:repeat>
+				</table>
+			</h:panelGroup>
+		</h:panelGrid>
+
+
+		
+		
+
+		<h4>
+			<b><u>Regression Equation :</u> </b>
+			<h:outputText value="#{regressionBean.equation}" id="equation" />
+		</h4>
+
+		<b><h:outputText value="Regression Model" id="heading1" /> <br />
+		</b>
+		<h:panelGrid columns="5" border="1" id="regression_report_1">
+			<h:outputText value="Predictor" />
+			<h:outputText value="Co-efficient" />
+			<h:outputText value="Standard Error Co-efficient" />
+			<h:outputText value="T-Statistic" />
+			<h:outputText value="P-Value" />
+			<h:outputText value="Constant" />
+			<h:outputText value="#{regressionBean.intercept}" />
+			<h:outputText value="#{regressionBean.interceptStandardError}" />
+			<h:outputText value="#{regressionBean.tStatistic}" />
+			<h:outputText value="#{regressionBean.interceptPValue}" />
+			<h:outputText value="#{regressionBean.pvSelected}" />
+			<h:outputText value="#{regressionBean.slope}" />
+			<h:outputText value="#{regressionBean.slopeStandardError}" />
+			<h:outputText value="#{regressionBean.tStatisticPredictor}" />
+			<h:outputText value="#{regressionBean.pValuePredictor}" />
+		</h:panelGrid>
+		<br />
+		<br />
+		<h:panelGrid columns="2" border="1" id="regression_report_2">
+			<h:outputText value="Model Standard Error" />
+			<h:outputText value="#{regressionBean.standardErrorModel}" />
+			<h:outputText value="R Square(Co-efficient of Determination)" />
+			<h:outputText value="#{regressionBean.rSquare}" />
+			<h:outputText
+				value="R Square Adjusted(Co-efficient of Determination)" />
+			<h:outputText value="#{regressionBean.rSquareAdjusted}" />
+		</h:panelGrid>
+		<br />
+		<br />
+		<b><h:outputText value="Analysis of Variance" id="heading2" /> <br />
+		</b>
+		<h:panelGrid columns="6" border="1" id="regression_report_3">
+			<h:outputText value="Source" />
+			<h:outputText value="Degrees of Freedom(DF)" />
+			<h:outputText value="Sum of Squares" />
+			<h:outputText value="Mean of Squares" />
+			<h:outputText value="F-Statistic" />
+			<h:outputText value="P-Value" />
+			<h:outputText value="Regression" />
+			<h:outputText value="#{regressionBean.predictorDF}" />
+			<h:outputText value="#{regressionBean.regressionSumSquares}" />
+			<h:outputText value="#{regressionBean.meanSquare}" />
+			<h:outputText value="#{regressionBean.fValue}" />
+			<h:outputText value="#{regressionBean.pValue}" />
+			<h:outputText value="Residual Error" />
+			<h:outputText value="#{regressionBean.residualErrorDF}" />
+			<h:outputText value="#{regressionBean.sumSquaredErrors}" />
+			<h:outputText value="#{regressionBean.meanSquareError}" />
+			<h:outputText value="" />
+			<h:outputText value="" />
+			<h:outputText value="Total" />
+			<h:outputText value="#{regressionBean.totalDF}" />
+		</h:panelGrid>
+	</h:form>
+
+
+	<br />
+	<br> </br>
+	<br />
+	<br> </br>
+	<br />
+	<br> </br>
+
+	<div id="footer">
+
+		<ui:insert name="footer">
+			<ui:include src="/WEB-INF/templates/footer.xhtml" />
+		</ui:insert>
+	</div>
+
+</h:body>
+
+</html>

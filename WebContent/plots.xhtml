@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head></h:head>
+
+<h:body>
+	<h:outputStylesheet library="css" name="style.css" />
+	<div id="header">
+		<ui:insert name="header">
+			<ui:include src="/WEB-INF/templates/header.xhtml" />
+		</ui:insert>
+	</div>
+
+
+
+	<h:form>
+		<h:panelGrid columns="5" cellpadding="1" cellspacing="1"
+			style="width: 300px">
+
+			<h:commandButton type="submit" value="Tables"
+				action="#{operationcontroller.getTables}">
+
+			</h:commandButton>
+			<h:commandButton type="submit" value="Columns"
+				action="#{operationcontroller.getColumns}">
+
+			</h:commandButton>
+			<h:commandButton type="submit"
+				value="Select Predictor and Target variables"
+				action="#{operationcontroller.getVariableList}">
+
+			</h:commandButton>
+
+
+			<h:commandButton type="submit" value="Generate Graph"
+				action="#{graphcontroller.generateGraph}">
+			</h:commandButton>
+
+
+
+			<h:commandButton type="submit" value="Clear"
+				action="#{operationcontroller.clearContent}" />
+		</h:panelGrid>
+
+
+		<br></br>
+		<h:panelGrid columns="5" cellspacing="2">
+
+			<h:panelGroup id="tablist_label">
+				<h:outputLabel> Table List </h:outputLabel>
+			</h:panelGroup>
+			
+			<h:panelGroup id="graphlist_label">
+				<h:outputLabel> Graph Type </h:outputLabel>
+			</h:panelGroup>
+
+			<h:panelGroup id="colList_label">
+				<h:outputLabel> Column List </h:outputLabel>
+			</h:panelGroup>
+
+			<h:panelGroup id="pv">
+				<h:outputLabel> Predictor Variable </h:outputLabel>
+			</h:panelGroup>
+
+			<h:panelGroup id="tv">
+				<h:outputLabel>Target Variable </h:outputLabel>
+			</h:panelGroup>
+		
+
+		
+
+			<h:panelGroup id="table_group">
+				<h:selectOneListbox value="#{operationBean.tableSelected}" size="8"
+					style="width:10em">
+					<f:selectItems value="#{operationBean.tableList}" var="tableName"></f:selectItems>
+
+				</h:selectOneListbox>
+			</h:panelGroup>
+
+
+
+			<h:panelGroup id="plot_group">
+				<h:selectOneListbox value="#{graphbean.selectedPlot}" size="8"
+					style="width:10em">
+					<f:selectItem itemValue="Pie Chart" itemLabel="Pie Chart" />
+
+					<f:selectItem itemValue="Bar Chart" itemLabel="Bar Chart"></f:selectItem>
+					<f:selectItem itemValue="Scatter Plot" itemLabel="Scatter Plot"></f:selectItem>
+					<f:selectItem itemValue="Time-Series Plot"
+						itemLabel="Time-Series Plot"></f:selectItem>
+				</h:selectOneListbox>
+			</h:panelGroup>
+
+			<h:panelGroup id="column_group">
+				<h:selectManyListbox value="#{operationBean.columnsSelected}"
+					size="8" style="width:10em">
+					<f:selectItems value="#{operationBean.columnList}"
+						var="columnName1"></f:selectItems>
+				</h:selectManyListbox>
+			</h:panelGroup>
+
+
+			<h:panelGroup id="variable_group_p">
+				<h:selectOneListbox value="#{regressionBean.pvSelected}" size="8"
+					style="width:10em" rendered="#{statisticsBean.regression}">
+					<f:selectItems value="#{regressionBean.variableList}"
+						var="columnName2"></f:selectItems>
+				</h:selectOneListbox>
+			</h:panelGroup>
+
+			<h:panelGroup id="variable_group_t">
+				<h:selectOneListbox value="#{regressionBean.tvSelected}" size="8"
+					style="width:10em" rendered="#{statisticsBean.regression}">
+					<f:selectItems value="#{regressionBean.variableList}"
+						var="columnName3"></f:selectItems>
+				</h:selectOneListbox>
+			</h:panelGroup>
+
+
+
+		</h:panelGrid>
+
+		<h:panelGrid>
+			<h:panelGroup id="the_graph">
+
+				<h:graphicImage value="#{graphbean.graphPathName}" height="450"
+					width="600" alt="Chart Analysis" />
+
+			</h:panelGroup>
+		</h:panelGrid>
+	</h:form>
+
+
+	<div id="footer">
+		<ui:insert name="footer">
+			<ui:include src="/WEB-INF/templates/footer.xhtml" />
+		</ui:insert>
+	</div>
+
+</h:body>
+
+
+</html>

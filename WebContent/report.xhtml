@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head></h:head>
+
+<h:body>
+	<h:outputStylesheet library="css" name="style.css" />
+	<div id="header">
+		<ui:insert name="header">
+			<ui:include src="/WEB-INF/templates/header.xhtml" />
+		</ui:insert>
+	</div>
+
+
+<div class="form">
+		<h3> Upload Summary</h3>
+		<h:form id="report">
+			<h:panelGrid columns="2" >
+
+				<h:outputLabel value="Number of Records:" />
+				<h:outputText value="#{databean.rowCount}" />
+				<h:outputLabel value="Number of entries per Record:" />
+				<h:outputText value="#{databean.columnCount}" />
+				<h:outputLabel value="FileLabel:" />
+				<h:outputText value="#{databean.fileLabel}" />
+				<h:outputLabel value="FileName:" />
+				<h:outputText value="#{databean.datasetLabel }" />
+				<h:outputLabel value="FileType:" />
+				<h:outputText value="#{databean.fileType}" />
+				<h:outputLabel value="FileSize:" />
+				<h:outputText value="#{databean.fileSize }" />
+				<h:outputLabel value="fileContentType:" />
+				<h:outputText value="#{databean.fileContentType }" />
+				<h:outputLabel value="FilePath:" />
+				<h:outputText value="#{databean.filePath }" />
+				<h:outputLabel value="Message :" />
+				<h:outputText value="#{databean.status}" />
+			</h:panelGrid>
+			
+			<h:commandButton action="dataUpload"
+					value="Back to Upload" />
+
+		</h:form>
+</div>
+	<div id="footer">
+		<ui:insert name="footer">
+			<ui:include src="/WEB-INF/templates/footer.xhtml" />
+		</ui:insert>
+	</div>
+
+</h:body>
+
+
+</html>

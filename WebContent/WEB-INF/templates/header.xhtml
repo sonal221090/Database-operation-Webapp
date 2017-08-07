@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+<h:head>
+<style>
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+
+
+.button {
+     display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+
+</style>
+</h:head>
+
+
+
+<h:body>
+	
+		
+
+<ul>
+  <li><a href="dataUpload.xhtml">File Upload</a></li>
+  <li><a href="dataExport.xhtml" >Database Export</a></li>
+    <li><a href="databaseOperations.xhtml" >Database Operations</a></li>
+    <li><a href="Statistics.xhtml" >Perform Statistical Operations</a></li>
+     <li><a href="computeReturns.xhtml" >Compute Returns</a></li>
+    <li><a href="plots.xhtml" >Generate Graphs</a></li>
+    <li><a href="resources/IDS517_UserGuide.pdf" >User Guide</a></li>
+  
+  
+ 
+  
+	<h:form id="logout" style="float:right">
+		<h:commandButton type="submit" value="logout"
+			action="#{loginController.logout}" />
+	</h:form>
+
+
+
+</ul>
+</h:body>
+</html>

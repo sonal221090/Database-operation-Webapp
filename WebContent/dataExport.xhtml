@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+<h:head>
+</h:head>
+
+<h:body>
+	<h:outputStylesheet library="css" name="style.css" />
+	<div id="header">
+		<ui:insert name="header">
+			<ui:include src="/WEB-INF/templates/header.xhtml" />
+		</ui:insert>
+	</div>
+
+<div class="form">
+	<h3 align="center">Select the Table you wish to export.</h3>
+	
+		<h:form>
+		
+		<center>
+		<h:selectOneListbox value="#{databean.tableName}" size="7" width="15"
+			id="meta" align="center">
+
+			<f:selectItems value="#{dbcontroller.tableNamesBySchema}"
+				var="tableName" itemLabel="#{tableNamesBySchema}"
+				itemValue="#{tableNamesBySchema}"></f:selectItems>
+		</h:selectOneListbox>
+		
+		</center>
+		
+		<h:commandButton action="#{export.generateXml}" value="Export XML">
+		</h:commandButton>
+		
+	
+		<h:commandButton action="#{export.exportCSV}" value="Export CSV">
+		</h:commandButton>
+		
+
+
+
+	</h:form>
+
+</div>
+	<div id="footer">
+		<ui:insert name="footer">
+			<ui:include src="/WEB-INF/templates/footer.xhtml" />
+		</ui:insert>
+	</div>
+
+</h:body>
+
+
+
+
+</html>

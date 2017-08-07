@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+	<title><ui:insert name="title">Default title</ui:insert></title>
+</h:head>
+
+
+
+<h:body>
+	<h:outputStylesheet library="css" name="style.css" />
+
+
+	<div id="header">
+		<ui:insert name="header">
+			<ui:include src="/WEB-INF/templates/header.xhtml" />
+		</ui:insert>
+	</div>
+<div class="form">
+	<table align="center">
+	<tr>
+	
+	
+	<td><a href="dataUpload.xhtml">File Upload</a></td>
+	</tr>
+	<tr>
+	<td><a href="descriptive-model.xhtml" >Perform	Descriptive Statistics</a></td>
+	</tr>
+	<tr>
+	<td><a href="databaseOperations.xhtml" >Database Operations</a></td>
+	</tr>
+	
+	<tr>
+		<td><a href="dataExport.xhtml" >Database Export</a></td>
+	</tr>
+	
+	<tr>
+		<td><a href="Statistics.xhtml" >Statistical Operations</a></td>
+	</tr>
+	
+	<tr>
+		<td><a href="plots.xhtml" >Generate Graphs</a></td>
+	</tr>
+	
+	
+	</table>
+	
+	</div>
+	
+<div id="footer">
+		<ui:insert name="footer">
+			<ui:include src="/WEB-INF/templates/footer.xhtml" />
+		</ui:insert>
+	</div>
+</h:body>
+
+</html>

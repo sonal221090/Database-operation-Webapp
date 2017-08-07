@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head></h:head>
+
+<h:body>
+	<h:outputStylesheet library="css" name="style.css" />
+	<div id="header">
+		<ui:insert name="header">
+			<ui:include src="/WEB-INF/templates/header.xhtml" />
+		</ui:insert>
+	</div>
+
+	<div class="form">
+		<h:form enctype="multipart/form-data" id="uploadform">
+
+
+			<h:panelGrid id="upload" columns="2">
+				<h:outputLabel value="File Type:" />
+
+				<h:selectOneRadio value="#{databean.fileType}" id="file">
+					<f:selectItem itemValue="metadata" itemLabel="Metadata"
+						selected="true" />
+					<f:selectItem itemValue="data" itemLabel="Data" />
+					<f:ajax execute="@all" render="meta1 meta2"></f:ajax>
+
+				</h:selectOneRadio>
+
+				<h:outputLabel value="Select File to upload:" />
+				<h:inputFile value="#{databean.file}" />
+
+
+				<h:outputLabel value="File Label:" />
+				<h:inputText id="fileLabel" value="#{databean.fileLabel}" requiredMessage="A file Label is required"/>
+
+
+
+				<h:panelGroup id="meta1">
+
+
+					<h:outputLabel value="Dataset label:"
+						rendered="#{databean.fileType=='data'}" />
+
+				</h:panelGroup>
+				<h:panelGroup id="meta2">
+
+					<h:selectOneListbox value="#{databean.tableName}" size="7"
+						width="10" rendered="#{databean.fileType=='data'}">
+
+						<f:selectItems value="#{dbcontroller.tableNamesBySchema}"
+							var="tableName" itemLabel="#{tableNamesBySchema}"
+							itemValue="#{tableNamesBySchema}"></f:selectItems>
+
+					</h:selectOneListbox>
+
+
+
+				</h:panelGroup>
+
+
+				<h:outputLabel value="File Format:" />
+				<h:selectOneMenu value="#{databean.fileFormat}">
+					<f:selectItem itemValue="txt" itemLabel="Tab Delimited" />
+					<f:selectItem itemValue="xls" itemLabel="Excel" />
+					<f:selectItem itemValue="csv" itemLabel="CSV" />
+
+				</h:selectOneMenu>
+
+
+				<h:outputLabel value="Header Row:" />
+				<h:selectOneMenu value="#{databean.headerRow}">
+					<f:selectItem itemValue="Y" itemLabel="Yes" />
+					<f:selectItem itemValue="N" itemLabel="No" />
+				</h:selectOneMenu>
+			
+			<h:panelGroup >
+			
+			</h:panelGroup>
+			
+			<h:commandButton action="#{dataController.processFile}"
+			value="Upload">
+				
+
+				</h:commandButton>
+			</h:panelGrid>
+		
+			<h:message for="fileLabel" style="color:red" />
+			<h:outputText value="#{databean.errorMessage}"></h:outputText>
+			
+
+
+		</h:form>
+
+	</div>
+
+	<br />
+	<br />
+
+
+
+
+		
+
+
+
+
+
+	
+
+	<div id="footer">
+		<ui:insert name="footer">
+			<ui:include src="/WEB-INF/templates/footer.xhtml" />
+		</ui:insert>
+	</div>
+
+</h:body>
+
+
+</html>
